@@ -1,13 +1,31 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>weather-forecast</title>
+</head>
+<body>
+  <div id="app"></div>
+  <div id="home-container">
+    <h1 id="title">홈 페이지</h1>
+    <div id="weather-box">
+      <h3 id="region">Seoul</h3>
+      <div>2025년 01월 05일 11시 52분</div>
+      <div id="weather-info-box">
+        <img src="/vite.svg" />
+        <div id="weather-detail-box">
+          <p>현재</p>
+          <p>0.84</p>
+          <p>최저/최고</p>
+          <p>0.84C/0.84C</p>
+        </div>
+      </div>
+      <p>온흐림</p>
+    </div>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+
 </html>

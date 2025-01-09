@@ -21,6 +21,8 @@
   gap: 20px;
   padding: 20px;
   border: 1px solid gray;
+  text-decoration: none;
+  color: black;
 }
 
 #region {

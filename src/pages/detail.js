@@ -1,16 +1,14 @@
+import { weatherDetailData } from '../constants/weather-data';
+import getWeatherBoxView from '../views/weather-box';
+
 function Detail(container) {
   this.container = container;
-  console.log('container', container);
-  this.setState = () => {
-    this.render();
-  };
 
   this.render = () => {
-    this.container.innerHTML = `
-      <main class="mainPage">
-        메인 페이지에요.
-      </main>
-    `;
+    this.container.innerHTML = getWeatherBoxView({
+      weatherData: weatherDetailData,
+      page: 'detailPage'
+    });
   };
 
   this.render();

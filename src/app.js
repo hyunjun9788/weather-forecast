@@ -1,7 +1,6 @@
-import Router from './route';
+import Router from './router';
 
 function App(container) {
-  console.log(container);
   this.container = container;
 
   const init = () => {

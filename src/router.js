@@ -1,48 +1,45 @@
 import { BASE_URL, routes } from './constants/route';
 import { navigate } from './utils/navigate';
 
-function Router(container) {
-  this.container = container;
-  const findMatchedRoute = () => {
-    return routes.find((route) => route.path.test(location.pathname));
-  };
+class Router {
+  constructor(container) {
+    this.container = container;
+    this.registerRouterEvents();
+  }
 
-  const renderComponent = () => {
-    const matchedRoute = findMatchedRoute();
+  findMatchedRoute() {
+    return routes.find((route) => route.path.test(location.pathname));
+  }
+
+  renderComponent() {
+    const matchedRoute = this.findMatchedRoute();
     const Component = matchedRoute.component;
     new Component(this.container);
-  };
+  }
 
-  const handleNavigate = (e) => {
+  handleNavigate(e) {
     const target = e.target.closest('a');
     if (!(target instanceof HTMLAnchorElement)) return;
 
     e.preventDefault();
     const targetURL = target.href.replace(BASE_URL, '');
     navigate(targetURL);
-  };
+  }
 
-  const updateRoute = ({ detail }) => {
+  updateRoute({ detail }) {
     const { toPath } = detail;
     if (toPath !== location.pathname) {
       history.pushState(null, '', toPath);
     }
-    renderComponent();
-  };
+    this.renderComponent();
+  }
 
-  const registerRouterEvents = () => {
-    this.container.addEventListener('click', handleNavigate);
-
-    window.addEventListener('historyChange', updateRoute);
-
-    window.addEventListener('popstate', () => {
-      renderComponent();
-    });
-
-    renderComponent();
-  };
-
-  registerRouterEvents();
+  registerRouterEvents() {
+    this.container.addEventListener('click', (e) => this.handleNavigate(e));
+    window.addEventListener('historyChange', (e) => this.updateRoute(e));
+    window.addEventListener('popstate', () => this.renderComponent());
+    this.renderComponent();
+  }
 }
 
 export default Router;

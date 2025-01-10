@@ -1,12 +1,14 @@
 import Router from './router';
 
-function App(container) {
-  this.container = container;
+class App {
+  constructor(container) {
+    this.container = container;
+    this.init();
+  }
 
-  const init = () => {
-    new Router(container);
-  };
-  init();
+  init() {
+    new Router(this.container);
+  }
 }
 
 export default App;

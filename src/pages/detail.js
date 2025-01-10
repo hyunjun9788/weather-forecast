@@ -1,17 +1,18 @@
 import { weatherDetailData } from '../constants/weather-data';
 import getWeatherBoxView from '../views/weather-box';
 
-function Detail(container) {
-  this.container = container;
+class Detail {
+  constructor(container) {
+    this.container = container;
+    this.render();
+  }
 
-  this.render = () => {
+  render() {
     this.container.innerHTML = getWeatherBoxView({
       weatherData: weatherDetailData,
-      page: 'detailPage'
+      page: 'detailPage',
     });
-  };
-
-  this.render();
+  }
 }
 
 export default Detail;

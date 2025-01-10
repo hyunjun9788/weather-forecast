@@ -1,17 +1,17 @@
 import { weatherHomeData } from '../constants/weather-data';
 import getWeatherBoxView from '../views/weather-box';
 
-function Home(container) {
-  this.container = container;
-
-  this.render = () => {
+class Home {
+  constructor(container) {
+    this.container = container;
+    this.render();
+  }
+  render = () => {
     this.container.innerHTML = getWeatherBoxView({
       weatherData: weatherHomeData,
-      page: 'homePage'
+      page: 'homePage',
     });
   };
-
-  this.render();
 }
 
 export default Home;

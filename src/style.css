@@ -1,4 +1,4 @@
-#home-container {
+#container {
   margin-top: 50px;
   display: flex;
   flex-direction: column;
@@ -11,6 +11,7 @@
   font-size: 32px;
   font-weight: 700;
 }
+
 #weather-box {
   width: 350px;
   height: 350px;
@@ -23,7 +24,7 @@
   color: black;
 }
 
-#region {
+#region-box {
   font-size: 24px;
 }
 

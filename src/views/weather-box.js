@@ -5,11 +5,11 @@ function getWeatherBoxView({ weatherData, page }) {
   };
 
   return `
-    <div id="home-container">
+    <div id="container">
       <h1 id="title-box">${title}</h1>
       ${getHomeButton()}
       <a href="/detail" id="weather-box" class="${page === 'detailPage' ? 'disabled-link' : ''}" >
-        <h3 id="region">${region}</h3>
+        <h3 id="region-box">${region}</h3>
         <div>${date}</div>
         <div id="weather-info-box">
           <img src=${url} />

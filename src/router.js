@@ -1,5 +1,5 @@
+import { HISTORY_EVENT } from './constants/history-api';
 import { BASE_URL, routes } from './constants/route';
-import { navigate } from './utils/navigate';
 
 class Router {
   constructor(container) {
@@ -17,13 +17,22 @@ class Router {
     new Component(this.container);
   }
 
+  navigate(toPath) {
+    const historyChangeEvent = new CustomEvent(HISTORY_EVENT.HISTORY_CHANGE, {
+      detail: {
+        toPath,
+      },
+    });
+    dispatchEvent(historyChangeEvent);
+  }
+
   handleNavigate(e) {
     const target = e.target.closest('a');
     if (!(target instanceof HTMLAnchorElement)) return;
 
     e.preventDefault();
     const targetURL = target.href.replace(BASE_URL, '');
-    navigate(targetURL);
+    this.navigate(targetURL);
   }
 
   updateRoute({ detail }) {
@@ -36,8 +45,8 @@ class Router {
 
   registerRouterEvents() {
     this.container.addEventListener('click', (e) => this.handleNavigate(e));
-    window.addEventListener('historyChange', (e) => this.updateRoute(e));
-    window.addEventListener('popstate', () => this.renderComponent());
+    window.addEventListener(HISTORY_EVENT.HISTORY_CHANGE, (e) => this.updateRoute(e));
+    window.addEventListener(HISTORY_EVENT.POP_STATE, () => this.renderComponent());
     this.renderComponent();
   }
 }

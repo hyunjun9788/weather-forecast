@@ -1,4 +1,4 @@
-import { weatherDetailData } from '../constants/weather-data';
+import { weatherDetailInfo } from '../constants/weather-data';
 import getWeatherBoxView from '../views/weather-box';
 
 class Detail {
@@ -9,7 +9,7 @@ class Detail {
 
   render() {
     this.container.innerHTML = getWeatherBoxView({
-      weatherData: weatherDetailData,
+      weatherData: weatherDetailInfo,
       page: 'detailPage',
     });
   }

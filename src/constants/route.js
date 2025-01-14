@@ -5,5 +5,5 @@ export const BASE_URL = 'http://localhost:5173';
 
 export const routes = [
   { path: /^\/$/, component: Home },
-  { path: /^\/detail$/, component: Detail }
+  { path: /^\/detail$/, component: Detail },
 ];

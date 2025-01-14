@@ -1,27 +1,62 @@
+import { ICON_BASE_URL } from '../api/weather';
+import WeatherBoxSkeleton from '../skeleton/weather-box';
+import { formatDate } from '../utils/format-date';
+
 class WeatherBoxView {
-  constructor({ container, weatherData, page }) {
+  constructor({ container, weatherInfo, page }) {
     this.container = container;
     this.page = page;
-    Object.assign(this, weatherData);
+    this.weatherInfo = weatherInfo;
   }
 
-  render() {
-    return `
+  renderHomePage() {
+    if (!this.weatherInfo) {
+      const weatherBoxSkeleton = new WeatherBoxSkeleton();
+      return weatherBoxSkeleton.render();
+    } else {
+      return `
         <a href="/detail" id="weather-box" class="${this.page === 'detailPage' ? 'disabled-link' : ''}" >
-          <h3 id="region-box">${this.region}</h3>
-          <div>${this.date}</div>
+          <h3 id="region-box">${this.weatherInfo.name}</h3>
+          <div>${formatDate(this.weatherInfo.dt)}</div>
           <div id="weather-info-box">
-            <img src=${this.url} />
+            <img src="${ICON_BASE_URL + this.weatherInfo.weather[0].icon}.png" />
             <div id="weather-detail-box">
               <p>현재</p>
-              <p>${this.curTemperature}</p>
+              <p>${this.weatherInfo.main.temp}°C</p>
               <p>최저/최고</p>
-              <p>${this.low}/${this.high}</p>
+              <p>${this.weatherInfo.main.temp_min}°C / ${this.weatherInfo.main.temp_max}°C</p>
             </div>
           </div>
-          <p>온흐림</p>
+          <p>${this.weatherInfo.weather[0].description}</p>
         </a>
         `;
+    }
+  }
+
+  renderDetailPage() {
+    if (!this.weatherInfo) {
+      const weatherBoxSkeleton = new WeatherBoxSkeleton();
+      return weatherBoxSkeleton.render();
+    }
+
+    return this.weatherInfo.list.slice(0, 5).map((weatherItem) => {
+      return `
+        <a href="/detail" id="weather-box" class="${this.page === 'detailPage' ? 'disabled-link' : ''}" >
+          <h3 id="region-box">${this.weatherInfo.city.name}</h3>
+          <div>${formatDate(weatherItem.dt)}</div>
+          <div id="weather-info-box">
+            <img src="${ICON_BASE_URL + weatherItem.weather[0].icon}.png" />
+            <div id="weather-detail-box">
+              <p>현재</p>
+              <p>${weatherItem.main.temp}°C</p>
+              <p>최저/최고</p>
+              <p>${weatherItem.main.temp_min}°C / ${weatherItem.main.temp_max}°C</p>
+            </div>
+          </div>
+          <p>${weatherItem.weather[0].description}</p>
+        </a>
+        `;
+    });
   }
 }
 

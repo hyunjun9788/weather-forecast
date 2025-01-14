@@ -3,19 +3,18 @@ import WeatherBoxSkeleton from '../skeleton/weather-box';
 import { formatDate } from '../utils/format-date';
 
 class WeatherBoxView {
-  constructor({ container, weatherInfo, page }) {
+  constructor({ container, weatherInfo }) {
     this.container = container;
-    this.page = page;
     this.weatherInfo = weatherInfo;
+    this.weatherBoxSkeleton = new WeatherBoxSkeleton();
   }
 
   renderHomePage() {
     if (!this.weatherInfo) {
-      const weatherBoxSkeleton = new WeatherBoxSkeleton();
-      return weatherBoxSkeleton.render();
+      return this.weatherBoxSkeleton.render();
     } else {
       return `
-        <a href="/detail" id="weather-box" class="${this.page === 'detailPage' ? 'disabled-link' : ''}" >
+        <a href="/detail" id="weather-box">
           <h3 id="region-box">${this.weatherInfo.name}</h3>
           <div>${formatDate(this.weatherInfo.dt)}</div>
           <div id="weather-info-box">
@@ -35,13 +34,12 @@ class WeatherBoxView {
 
   renderDetailPage() {
     if (!this.weatherInfo) {
-      const weatherBoxSkeleton = new WeatherBoxSkeleton();
-      return weatherBoxSkeleton.render();
+      return this.weatherBoxSkeleton.render();
     }
 
     return this.weatherInfo.list.slice(0, 5).map((weatherItem) => {
       return `
-        <a href="/detail" id="weather-box" class="${this.page === 'detailPage' ? 'disabled-link' : ''}" >
+        <div id="weather-box" >
           <h3 id="region-box">${this.weatherInfo.city.name}</h3>
           <div>${formatDate(weatherItem.dt)}</div>
           <div id="weather-info-box">
@@ -54,7 +52,7 @@ class WeatherBoxView {
             </div>
           </div>
           <p>${weatherItem.weather[0].description}</p>
-        </a>
+        </div>
         `;
     });
   }

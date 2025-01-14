@@ -28,7 +28,6 @@ class Home {
     const weatherBoxView = new WeatherBoxView({
       container: this.container,
       weatherInfo,
-      page: 'homePage',
     });
 
     this.container.innerHTML = `

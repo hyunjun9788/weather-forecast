@@ -3,7 +3,6 @@ import Router from './router';
 class App {
   constructor(container) {
     this.container = container;
-    this.init();
   }
 
   init() {

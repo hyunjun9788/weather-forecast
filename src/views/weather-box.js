@@ -1,28 +1,28 @@
-function getWeatherBoxView({ weatherData, page }) {
-  const { title, region, date, url, curTemperature, low, high } = weatherData;
-  const getHomeButton = () => {
-    return page === 'detailPage' ? `<a href="/" id="home-btn">홈으로</a>` : '';
-  };
+class WeatherBoxView {
+  constructor({ container, weatherData, page }) {
+    this.container = container;
+    this.page = page;
+    Object.assign(this, weatherData);
+  }
 
-  return `
-    <div id="container">
-      <h1 id="title-box">${title}</h1>
-      ${getHomeButton()}
-      <a href="/detail" id="weather-box" class="${page === 'detailPage' ? 'disabled-link' : ''}" >
-        <h3 id="region-box">${region}</h3>
-        <div>${date}</div>
-        <div id="weather-info-box">
-          <img src=${url} />
-          <div id="weather-detail-box">
-            <p>현재</p>
-            <p>${curTemperature}</p>
-            <p>최저/최고</p>
-            <p>${low}/${high}</p>
+  render() {
+    return `
+        <a href="/detail" id="weather-box" class="${this.page === 'detailPage' ? 'disabled-link' : ''}" >
+          <h3 id="region-box">${this.region}</h3>
+          <div>${this.date}</div>
+          <div id="weather-info-box">
+            <img src=${this.url} />
+            <div id="weather-detail-box">
+              <p>현재</p>
+              <p>${this.curTemperature}</p>
+              <p>최저/최고</p>
+              <p>${this.low}/${this.high}</p>
+            </div>
           </div>
-        </div>
-        <p>온흐림</p>
-      </a>
-    </div>`;
+          <p>온흐림</p>
+        </a>
+        `;
+  }
 }
 
-export default getWeatherBoxView;
+export default WeatherBoxView;

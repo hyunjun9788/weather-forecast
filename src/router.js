@@ -1,5 +1,5 @@
 import { HISTORY_EVENT } from './constants/history-api';
-import { BASE_URL, routes } from './constants/route';
+import { BASE_URL, ROUTES } from './constants/route';
 
 class Router {
   constructor(container) {
@@ -8,13 +8,29 @@ class Router {
   }
 
   findMatchedRoute() {
-    return routes.find((route) => route.path.test(location.pathname));
+    return ROUTES.find((route) => route.path.test(location.pathname));
   }
 
   renderComponent() {
     const matchedRoute = this.findMatchedRoute();
     const Component = matchedRoute.component;
     new Component(this.container);
+  }
+
+  handleNavigate(e) {
+    const target = e.target.closest('a');
+    if (!(target instanceof HTMLAnchorElement)) return;
+    e.preventDefault();
+    const targetURL = target.href.replace(BASE_URL, '');
+    this.navigate(targetURL);
+  }
+
+  updateRoute({ detail }) {
+    const { toPath } = detail;
+    if (toPath !== location.pathname) {
+      history.replaceState(null, '', toPath);
+    }
+    this.renderComponent();
   }
 
   navigate(toPath) {
@@ -24,23 +40,6 @@ class Router {
       },
     });
     dispatchEvent(historyChangeEvent);
-  }
-
-  handleNavigate(e) {
-    const target = e.target.closest('a');
-    if (!(target instanceof HTMLAnchorElement)) return;
-
-    e.preventDefault();
-    const targetURL = target.href.replace(BASE_URL, '');
-    this.navigate(targetURL);
-  }
-
-  updateRoute({ detail }) {
-    const { toPath } = detail;
-    if (toPath !== location.pathname) {
-      history.pushState(null, '', toPath);
-    }
-    this.renderComponent();
   }
 
   registerRouterEvents() {

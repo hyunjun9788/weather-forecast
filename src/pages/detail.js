@@ -1,5 +1,5 @@
-import { weatherDetailInfo } from '../constants/weather-data';
-import getWeatherBoxView from '../views/weather-box';
+import { weatherDetailInfo } from '../constants/weather-info';
+import WeatherBoxView from '../views/weather-box';
 
 class Detail {
   constructor(container) {
@@ -7,11 +7,24 @@ class Detail {
     this.render();
   }
 
+  getHomeButton() {
+    return `<a href="/" id="home-btn">홈으로</a>`;
+  }
+
   render() {
-    this.container.innerHTML = getWeatherBoxView({
+    const weatherBoxView = new WeatherBoxView({
+      container: this.container,
       weatherData: weatherDetailInfo,
       page: 'detailPage',
     });
+
+    this.container.innerHTML = `
+      <div id="container">
+        <h1 id="title-box">${weatherDetailInfo.title}</h1>
+        ${this.getHomeButton()}
+        ${weatherBoxView.render()}
+      </div>
+    `;
   }
 }
 

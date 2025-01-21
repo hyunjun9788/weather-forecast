@@ -1,4 +1,5 @@
-import { API_KEY, CURRENT_WEATHER_BASE_URL, getWeatherInfo } from '../api/weather';
+import { API_KEY, getWeatherInfo, WEATHER_BASE_URL } from '../api/weather';
+import WeatherBoxSkeleton from '../skeleton/weather-box';
 
 import WeatherBoxView from '../views/weather-box';
 
@@ -7,12 +8,13 @@ class Home {
     this.container = container;
     this.weatherUrl = this.getWeatherUrl('Seoul');
     this.weatherInfo = null;
+    this.weatherBoxSkeleton = new WeatherBoxSkeleton();
     this.render();
     this.init();
   }
 
   getWeatherUrl(city, key = API_KEY) {
-    return `${CURRENT_WEATHER_BASE_URL}?q=${city}&appid=${key}&units=metric&lang=kr`;
+    return `${WEATHER_BASE_URL}/weather?q=${city}&appid=${key}&units=metric&lang=kr`;
   }
 
   async init() {
@@ -27,13 +29,13 @@ class Home {
   render(weatherInfo) {
     const weatherBoxView = new WeatherBoxView({
       container: this.container,
-      weatherInfo,
     });
 
     this.container.innerHTML = `
       <div id="container">
         <h1 id="title-box">홈 페이지</h1>
-        ${weatherBoxView.renderHomePage()}
+      ${!weatherInfo ? this.weatherBoxSkeleton.render() : weatherBoxView.renderHomePage(weatherInfo)}
+
       </div>
     `;
   }

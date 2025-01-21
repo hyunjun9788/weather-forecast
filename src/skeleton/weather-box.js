@@ -1,6 +1,4 @@
 class WeatherBoxSkeleton {
-  constructor() {}
-
   render() {
     return `
        <div

@@ -1,21 +1,19 @@
-import { API_KEY, getWeatherInfo, THREE_HOURS_WEATHER_BASE_URL } from '../api/weather';
+import { getWeatherInfo, getWeatherUrl } from '../api/weather';
+import WeatherBoxSkeleton from '../skeleton/weather-box';
 import WeatherBoxView from '../views/weather-box';
 
 class Detail {
   constructor(container) {
     this.container = container;
-    this.weatherUrl = this.getWeatherUrl('Seoul');
+    this.weatherUrl = getWeatherUrl('Seoul');
     this.weatherInfo = null;
+    this.weatherBoxSkeleton = new WeatherBoxSkeleton();
     this.render();
     this.init();
   }
 
   getHomeButton() {
     return `<a href="/" id="home-btn">홈으로</a>`;
-  }
-
-  getWeatherUrl(city, key = API_KEY) {
-    return `${THREE_HOURS_WEATHER_BASE_URL}?q=${city}&appid=${key}&units=metric&lang=kr`;
   }
 
   async init() {
@@ -30,14 +28,13 @@ class Detail {
   render(weatherInfo) {
     const weatherBoxView = new WeatherBoxView({
       container: this.container,
-      weatherInfo,
     });
 
     this.container.innerHTML = `
       <div id="container">
         <h1 id="title-box">Seoul</h1>
-        ${this.getHomeButton()}
-        ${weatherBoxView.renderDetailPage()}
+        <a href="/" id="home-btn">홈으로</a>
+        ${!weatherInfo ? this.weatherBoxSkeleton.render() : weatherBoxView.renderDetailPage(weatherInfo)}
       </div>
     `;
   }

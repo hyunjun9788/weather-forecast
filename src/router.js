@@ -1,5 +1,5 @@
-import { HISTORY_EVENT } from './constants/history-api';
-import { BASE_URL, ROUTES } from './constants/route';
+import { HISTORY_EVENT } from './constants/custom-event';
+import { APP_BASE_URL, ROUTES } from './constants/route';
 
 class Router {
   constructor(container) {
@@ -21,7 +21,7 @@ class Router {
     const target = e.target.closest('a');
     if (!(target instanceof HTMLAnchorElement)) return;
     e.preventDefault();
-    const targetURL = target.href.replace(BASE_URL, '');
+    const targetURL = target.href.replace(APP_BASE_URL, '');
     this.navigate(targetURL);
   }
 

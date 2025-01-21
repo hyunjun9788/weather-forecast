@@ -1,0 +1,52 @@
+.skeleton {
+  background-color: #eee;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton::before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, transparent 0%, #ddd 50%, transparent 100%);
+  animation: skeleton-loading 1.2s ease-in-out infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton-title {
+  height: 24px;
+  margin-bottom: 8px;
+}
+
+.skeleton-date {
+  width: 120px;
+  height: 18px;
+  margin-bottom: 10px;
+}
+
+.skeleton-icon {
+  width: 50px;
+  height: 50px;
+}
+
+.skeleton-detail-box {
+  width: 80px;
+  height: 16px;
+}
+
+.skeleton-description {
+  width: 80px;
+  height: 16px;
+  margin-top: 6px;
+}
